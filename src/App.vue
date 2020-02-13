@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <calendar month="2020-02" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import HelloWorld from "./components/HelloWorld.vue";
+import Calendar from "./components/Calendar.vue";
 
 @Component({
   components: {
-    HelloWorld
+    Calendar
   }
 })
 export default class App extends Vue {}
