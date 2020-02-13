@@ -5,6 +5,11 @@
         v
       }}</span>
     </div>
+    <div class="calendar-date-container">
+      <div v-for="v in displayPeriod" :key="v" class="calendar-date-content">
+        <span class="day">{{ v }}</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,21 +21,22 @@ export default class HelloWorld extends Vue {
   @Prop({ type: String, required: true }) private month!: string;
 
   dayOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
+
+  get displayPeriod(): number[] {
+    return [...Array(31).keys()];
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .calendar-root {
-  background-color: rgba(112, 112, 112, 0.1);
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
 .day-of-week-container {
-  background-color: #fff;
   display: grid;
-  grid-gap: 1px;
   grid-template-columns: repeat(7, 1fr);
   height: 40px;
 }
@@ -39,5 +45,18 @@ export default class HelloWorld extends Vue {
   align-items: center;
   display: inline-flex;
   justify-content: center;
+}
+
+.calendar-date-container {
+  display: grid;
+  flex-grow: 1;
+  grid-auto-rows: minmax(74px, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.calendar-date-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 </style>
