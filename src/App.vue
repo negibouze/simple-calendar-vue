@@ -1,19 +1,34 @@
 <template>
   <div id="app">
-    <calendar month="2020-02" />
+    <calendar
+      :month="month"
+      @click-left="handleClickLeft"
+      @click-right="handleClickRight"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Calendar from "./components/Calendar.vue";
+import { getNextYearMonth, getPreviousYearMonth } from "@/utils/day";
 
 @Component({
   components: {
     Calendar
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  month = "2020-02";
+
+  handleClickLeft() {
+    this.month = getPreviousYearMonth(this.month);
+  }
+
+  handleClickRight() {
+    this.month = getNextYearMonth(this.month);
+  }
+}
 </script>
 
 <style lang="scss">
