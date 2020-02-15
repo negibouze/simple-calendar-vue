@@ -91,6 +91,9 @@ export default class HelloWorld extends Vue {
 </script>
 
 <style lang="scss" scoped>
+$color-sunday: #f00;
+$color-saturday: #00f;
+
 .calendar-root {
   display: flex;
   flex-direction: column;
@@ -134,6 +137,14 @@ export default class HelloWorld extends Vue {
   background-color: #fff;
   display: inline-flex;
   justify-content: center;
+
+  &:first-of-type {
+    color: $color-sunday;
+  }
+
+  &:last-of-type {
+    color: $color-saturday;
+  }
 }
 
 .calendar-date-container {
@@ -150,5 +161,13 @@ export default class HelloWorld extends Vue {
   background-color: #fff;
   display: flex;
   flex-direction: column;
+
+  &:nth-of-type(7n) {
+    color: $color-saturday;
+  }
+
+  &:nth-of-type(7n + 1) {
+    color: $color-sunday;
+  }
 }
 </style>
