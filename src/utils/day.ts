@@ -16,6 +16,14 @@ function numberRange(n: number) {
 }
 
 /**
+ * 今日の日付を返す
+ * @param format
+ */
+export function getToday(format = defaultDateFormat) {
+  return dayjs().format(format);
+}
+
+/**
  * 渡した文字列の日付を返す
  * @param dateStr
  */

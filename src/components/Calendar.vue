@@ -17,7 +17,7 @@
           :key="date"
           class="calendar-date-content"
         >
-          <span class="day">{{ getDay(date) }}</span>
+          <span :class="dayClassObject(date)">{{ getDay(date) }}</span>
         </div>
       </div>
     </div>
@@ -27,6 +27,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import {
+  getToday,
   getDate,
   getFirstDateOfMonth,
   getLastDateOfMonth,
@@ -40,6 +41,10 @@ export default class HelloWorld extends Vue {
   @Prop({ type: String, required: true }) private month!: string;
 
   dayOfWeek = ["日", "月", "火", "水", "木", "金", "土"];
+
+  get today() {
+    return getToday();
+  }
 
   get firstDate() {
     if (!this.month) {
@@ -86,6 +91,16 @@ export default class HelloWorld extends Vue {
 
   handleClickRight() {
     this.$emit("click-right");
+  }
+
+  dayClassObject(date: string) {
+    const inMonth = date.startsWith(this.month);
+    return {
+      day: true,
+      "out-of-month": !inMonth,
+      "in-month": inMonth && this.today !== date,
+      today: this.today === date
+    };
   }
 }
 </script>
@@ -139,11 +154,15 @@ $color-saturday: #00f;
   justify-content: center;
 
   &:first-of-type {
-    color: $color-sunday;
+    > .in-month {
+      color: $color-sunday;
+    }
   }
 
   &:last-of-type {
-    color: $color-saturday;
+    > .in-month {
+      color: $color-saturday;
+    }
   }
 }
 
@@ -161,6 +180,7 @@ $color-saturday: #00f;
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  padding: 2px;
 
   &:nth-of-type(7n) {
     color: $color-saturday;
@@ -168,6 +188,24 @@ $color-saturday: #00f;
 
   &:nth-of-type(7n + 1) {
     color: $color-sunday;
+  }
+
+  .day {
+    display: inline-flex;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+
+    &.today {
+      background-color: #ff555d;
+      border-radius: 50%;
+      color: #fff;
+    }
+
+    &.out-of-month {
+      color: #aaa;
+    }
   }
 }
 </style>
